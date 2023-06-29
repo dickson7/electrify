@@ -26,6 +26,23 @@ class EquipmentDetailView(RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         return Equipment.objects.filter(owner=self.request.user)
     
+class MaintenanceDetailView(RetrieveUpdateDestroyAPIView):
+    
+    serializer_class = MaintenanceSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    lookup_field = "maintenance_id"
+
+    def get_queryset(self):
+        return Maintenance.objects.filter(maintenance_id=self.kwargs['maintenance_id'])
+    
+class ReadingsDetailView(RetrieveUpdateDestroyAPIView):
+    
+    serializer_class = ReadingsSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    lookup_field = "reading_id"
+
+    def get_queryset(self):
+        return Readings.objects.filter(reading_id=self.kwargs['reading_id'])
     
 class MaintenanceList(ListCreateAPIView):
     serializer_class = MaintenanceSerializer
